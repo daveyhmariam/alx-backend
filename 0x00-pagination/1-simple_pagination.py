@@ -1,19 +1,29 @@
 #!/usr/bin/env python3
+"""
+Defines class Server that paginates a database of popular baby names
+"""
 import csv
 import math
-from typing import List
+from typing import List, Tuple
 
 
-def index_range(page, page_size):
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
+    Takes 2 integer arguments and returns a tuple of size two
+    containing the start and end index corresponding to the range of
+    indexes to return in a list for those pagination parameters
     Args:
-        page (int): page num
-        page_size (int): page size
+        page (int): page number to return (pages are 1-indexed)
+        page_size (int): number of items per page
     Return:
-        tuple: size two, range of indece
+        tuple(start_index, end_index)
     """
-    index = (page - 1) * page_size
-    return (index, index + page_size)
+    start, end = 0, 0
+    for i in range(page):
+        start = end
+        end += page_size
+
+    return (start, end)
 
 
 class Server:
@@ -42,7 +52,8 @@ class Server:
             page (int): required page number. must be a positive integer
             page_size (int): number of records per page. must be a +ve integer
         Return:
-            list of lists containing required data from the dataset        """
+            list of lists containing required data from the dataset
+        """
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
 
@@ -53,3 +64,4 @@ class Server:
             return dataset[index[0]:index[1]]
         except IndexError:
             return []
+    
