@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import math
-from typing import List
+from typing import List, Tuple
 
 
 class Server:
@@ -44,7 +44,7 @@ class Server:
             return []
 
 
-def index_range(page, page_size):
+def index_range(page, page_size) -> Tuple[int, int]:
     """
     Args:
         page (int): page num
