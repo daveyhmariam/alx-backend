@@ -4,6 +4,11 @@ import math
 from typing import List, Tuple
 
 
+import csv
+import math
+from typing import List
+
+
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -24,24 +29,20 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """
-        Takes 2 integer arguments and returns requested page from the dataset
-        Args:
-            page (int): required page number. must be a positive integer
-            page_size (int): number of records per page. must be a +ve integer
-        Return:
-            list of lists containing required data from the dataset
-        """
-        assert type(page) is int and page > 0
-        assert type(page_size) is int and page_size > 0
+        """_return page content
 
-        dataset = self.dataset()
-        data_length = len(dataset)
-        try:
-            index = index_range(page, page_size)
-            return dataset[index[0]:index[1]]
-        except IndexError:
-            return []
+        Args:
+            page (int, optional): page number. Defaults to 1.
+            page_size (int, optional): page size. Defaults to 10.
+
+        Returns:
+            List[List]: list of content of page
+        """
+        assert page is int and page > 0
+        assert page_size is int and page_size > 0
+        data = self.dataset()
+        ind = index_range(page, page_size)
+        return [data[ind[0]]: data[ind[1]]]
 
 
 def index_range(page, page_size) -> Tuple[int, int]:
