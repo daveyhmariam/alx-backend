@@ -30,16 +30,18 @@ class Server:
             page (int): required page number. must be a positive integer
             page_size (int): number of records per page. must be a +ve integer
         Return:
-            list of lists containing required data from the dataset        """
+            list of lists containing required data from the dataset
+        """
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
 
         dataset = self.dataset()
-        if not dataset:
+        data_length = len(dataset)
+        try:
+            index = index_range(page, page_size)
+            return dataset[index[0]:index[1]]
+        except IndexError:
             return []
-
-        start, end = index_range(page, page_size)
-        return dataset[start:end]
 
 
 def index_range(page, page_size):
