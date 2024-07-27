@@ -12,5 +12,9 @@ def index_range(page, page_size):
     Return:
         tuple: size two, range of indece
     """
-    index = (page - 1) * page_size
-    return (index, index + page_size)
+    start, end = 0, 0
+    for i in range(page):
+        start = end
+        end += page_size
+
+    return (start, end)
