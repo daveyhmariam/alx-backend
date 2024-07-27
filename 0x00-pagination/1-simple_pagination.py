@@ -38,12 +38,16 @@ class Server:
         Returns:
             List[List]: list of content of page
         """
-        assert page is int and page > 0
-        assert page_size is int and page_size > 0
+        assert type(page) is int and page > 0
+        assert type(page_size) is int and page_size > 0
         data = self.dataset()
         ind = index_range(page, page_size)
-        return [data[ind[0]]: data[ind[1]]]
-
+        start = ind[0]
+        end = ind[1]
+        try:
+            return data[start: end]
+        except IndexError:
+            return []
 
 def index_range(page, page_size) -> Tuple[int, int]:
     """
