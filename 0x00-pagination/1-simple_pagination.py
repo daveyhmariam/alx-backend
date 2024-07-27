@@ -37,15 +37,15 @@ class Server:
         Returns:
         List[List]: list of content of page
         """
+    
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
-    
-        data = self.dataset()
-        ind = index_range(page, page_size)
-        start = ind[0]
-        end = ind[1]
+
+        dataset = self.dataset()
+        data_length = len(dataset)
         try:
-            return data[start: end]
+            index = index_range(page, page_size)
+            return dataset[index[0]:index[1]]
         except IndexError:
             return []
 
