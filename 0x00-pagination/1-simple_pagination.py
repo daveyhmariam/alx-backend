@@ -3,7 +3,6 @@ import csv
 import math
 from typing import List, Tuple
 
-
 import csv
 import math
 from typing import List
@@ -32,14 +31,15 @@ class Server:
         """_return page content
 
         Args:
-            page (int, optional): page number. Defaults to 1.
-            page_size (int, optional): page size. Defaults to 10.
+        page (int, optional): page number. Defaults to 1.
+        page_size (int, optional): page size. Defaults to 10.
 
         Returns:
-            List[List]: list of content of page
+        List[List]: list of content of page
         """
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
+    
         data = self.dataset()
         ind = index_range(page, page_size)
         start = ind[0]
@@ -49,7 +49,7 @@ class Server:
         except IndexError:
             return []
 
-def index_range(page, page_size) -> Tuple[int, int]:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     Args:
         page (int): page num
@@ -59,3 +59,4 @@ def index_range(page, page_size) -> Tuple[int, int]:
     """
     index = (page - 1) * page_size
     return (index, index + page_size)
+
