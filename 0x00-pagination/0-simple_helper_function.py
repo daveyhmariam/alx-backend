@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Helper function that return index range of a page
 """
@@ -12,9 +12,5 @@ def index_range(page, page_size):
     Return:
         tuple: size two, range of indece
     """
-    start, end = 0, 0
-    for i in range(page):
-        start = end
-        end += page_size
-
-    return (start, end)
+    index = (page - 1) * page_size
+    return (index, index + page_size)
