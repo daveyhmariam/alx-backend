@@ -4,12 +4,27 @@ import math
 from typing import List, Tuple
 
 
+def index_range(page, page_size):
+    """
+    Args:
+        page (int): page num
+        page_size (int): page size
+    Return:
+        tuple: size two, range of indece
+    """
+    start = (page - 1) * page_size
+    end = start + page_size
+    return (start, end)
+
+
 class Server:
     """Server class to paginate a database of popular baby names.
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """Initializes a new Server instance.
+        """
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -22,6 +37,25 @@ class Server:
             self.__dataset = dataset[1:]
 
         return self.__dataset
+
+    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """_return page content
+        Args:
+        page (int, optional): page number. Defaults to 1.
+        page_size (int, optional): page size. Defaults to 10.
+        Returns:
+        List[List]: list of content of page
+        """
+        assert type(page) is int and page > 0
+        assert type(page_size) is int and page_size > 0
+
+        data = self.dataset()
+        ind = index_range(page, page_size)
+        start = ind[0]
+        end = ind[1]
+        if start > len(data):
+            return []
+        return data[start: end]
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
@@ -55,28 +89,19 @@ class Server:
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
 
+        hyper = {}
         dataset = self.dataset()
-        data_length = len(dataset)
-        total_pages = data_length // (page_size + 1)
         data = self.get_page(page, page_size)
-        info = {
-            "page": page,
-            "page_size": page_size if page_size <= len(data) else len(data),
-            "total_pages": total_pages,
-            "data": data,
-            "prev_page": page - 1 if page > 1 else None,
-            "next_page": page + 1 if page + 1 <= total_pages else None
-        }
-        return info
+        current_size = len(data)
+        total_pages = len(dataset) // page_size
 
-
-def index_range(page, page_size) -> Tuple[int, int]:
-    """
-    Args:
-        page (int): page num
-        page_size (int): page size
-    Return:
-        tuple: size two, range of indece
-    """
-    index = (page - 1) * page_size
-    return (index, index + page_size)
+        next_page = page + 1 if page < total_pages else None
+        previous_page = page - 1 if page > 1 else None
+        hyper = {"page_size": current_size,
+                 "page": page,
+                 "data": data,
+                 "next_page": next_page,
+                 "prev_page": previous_page,
+                 "total_pages": total_pages
+                 }
+        return hyper
