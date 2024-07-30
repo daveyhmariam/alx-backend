@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Module with class method for hyper media pagination
+"""
 import csv
 import math
 from typing import List, Tuple
