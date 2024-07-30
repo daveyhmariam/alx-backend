@@ -38,7 +38,7 @@ def index():
     Returns:
         str: Rendered HTML template.
     """
-    return render_template("0-index.html")
+    return render_template("2-index.html")
 
 @babel.localeselector
 def get_locale():
